@@ -1,7 +1,6 @@
 package com.oracle.infy.wookiee.grpc.tests
 
-import cats.effect.concurrent.Ref
-import cats.effect.{Blocker, ContextShift, IO, Timer}
+import cats.effect.IO
 import cats.implicits.{catsSyntaxEq => _}
 import com.oracle.infy.wookiee.grpc.common.{ConstableCommon, UTestScalaCheck}
 import com.oracle.infy.wookiee.grpc.json.HostSerde
@@ -23,6 +22,7 @@ import cats.data.NonEmptyList
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
+import cats.effect.{ Ref, Temporal }
 
 object GrpcLoadBalanceTest extends UTestScalaCheck with ConstableCommon {
 
@@ -32,9 +32,7 @@ object GrpcLoadBalanceTest extends UTestScalaCheck with ConstableCommon {
       curator: CuratorFramework
   )(
       implicit mainEC: ExecutionContext,
-      cs: ContextShift[IO],
-      blocker: Blocker,
-      timer: Timer[IO],
+      timer: Temporal[IO],
       logger: Logger[IO]
   ): Tests = {
     val testWeightedLoadBalancer = {

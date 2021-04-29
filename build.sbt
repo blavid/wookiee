@@ -44,7 +44,8 @@ val commonScalacOptions =
     "-feature",
     "-explaintypes",
     "-unchecked",
-    "-language:higherKinds"
+    "-language:higherKinds",
+    "-P:semanticdb:synthetics:on"
   )
 
 val commonSettings: Seq[Setting[_]] = Seq(

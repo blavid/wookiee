@@ -1,6 +1,6 @@
 package com.oracle.infy.wookiee.health.tests
 
-import cats.effect.{ContextShift, IO}
+import cats.effect.IO
 import com.oracle.infy.wookiee.grpc.common.UTestScalaCheck
 import com.oracle.infy.wookiee.health.HeathCheckServer
 import com.oracle.infy.wookiee.health.json.Serde
@@ -29,7 +29,7 @@ object HealthRoutesTest extends UTestScalaCheck with Serde {
     }).unsafeToFuture()
   }
 
-  def tests()(implicit cs: ContextShift[IO], executionContext: ExecutionContext): Tests = {
+  def tests()(implicit executionContext: ExecutionContext): Tests = {
 
     val health = Health(Normal, "Thunderbirds are GO", Map("ZK" -> Health(Critical, "no host found")))
     val response: IO[Response[IO]] = HeathCheckServer

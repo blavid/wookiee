@@ -38,7 +38,7 @@ object WookieeMetricsService {
     register(new MetricRegistry(), reporter)
   }
 
-  def noOpRegister(): Resource[IO, WookieeMetrics[IO]] = Resource.liftF(IO(new WookieeMetricsNoOpImpl()))
+  def noOpRegister(): Resource[IO, WookieeMetrics[IO]] = Resource.eval(IO(new WookieeMetricsNoOpImpl()))
 
   private def registerJvmMetrics(jvmRegistry: MetricRegistry): IO[Unit] =
     IO {
